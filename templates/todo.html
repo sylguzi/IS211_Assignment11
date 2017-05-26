@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+{% block body %}
+  <form action="/submit" method="POST">
+    <input type="hidden" name="id" value="{{ id }}" />
+    <div class="container">
+      {% if not id %}
+        <h1>Form to add a new to do item</h1>
+      {% else %}
+        <h1>Form to update a to do item</h1>
+      {% endif %}
+      <label><b>Priority</b></label>
+      <select name="priority" required>
+        {% for p in priorities %}
+          <option id="{{ p }}" {{ 'selected' if priority == p }}>
+            {{ p.capitalize() }}
+          </option>
+        {% endfor %}
+      </select><br>
+      
+      <label><b>Email</b></label>
+      <input type="email" name="email" value="{{ email }}" required/><br>
+      
+      <label><b>Task</b></label>
+      <input type="text" name="task" value="{{ task }}" required/><br>
+      {% if not id %}
+        <button type="submit">Add To Do Item</button>
+      {% else %}
+        <button type="submit">Update To Do Item</button>
+      {% endif %}
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="container error">
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+</form>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+{% block body %}
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<div class="container error">
+				{% for message in messages %}
+					{{ message }}
+				{% endfor %}
+			</div>
+		{% endif %}
+	{% endwith %}
+	<div class="mainContainer container">
+		<h1>List of todos</h1>	
+		<table class="layout display responsive-table">
+			<tr>
+				<th>Priority</th>
+				<th>Email</th>
+				<th>Task</th>
+				<th>Actions</th>
+			</tr>
+			{% for todo in todos %}
+				<tr>
+					<td>{{ todo.priority }}</td>
+					<td>{{ todo.email }}</td>
+					<td>{{ todo.task }}</td>
+					<td class="actions">
+						<a href="/todo/{{ todo.id }}/edit">Edit</a>
+						<a href="/todo/{{ todo.id }}/delete">Delete</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}
